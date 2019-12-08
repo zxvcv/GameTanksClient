@@ -1,6 +1,11 @@
-package clientApp;
+package clientApp.data;
 
-public class Player extends Indexable implements GameObject, Sendable{
+import clientApp.Game;
+import clientApp.abstractObjects.GameObject;
+import clientApp.abstractObjects.Indexable;
+import clientApp.abstractObjects.Sendable;
+
+public class Player extends Indexable implements Sendable {
     private Tank tank;
     private int points;
     private PlayerState playerState;
@@ -48,40 +53,6 @@ public class Player extends Indexable implements GameObject, Sendable{
 
     public Tank getTank(){
         return tank;
-    }
-
-    @Override
-    public void display() {
-        //...
-    }
-
-    @Override
-    public void dataUpdate() {
-        //System.out.println("dataUpdate - Player \t\tT: " + threadNum + " \tI: " + this.getIndex());
-        //...
-    }
-
-    @Override
-    public void collisionUpdate() {
-        //System.out.println("collisionUpdate - Player \tT: " + threadNum + " \tI: " + this.getIndex());
-        //...
-    }
-
-    @Override
-    public void afterUpdate() {
-        //System.out.println("afterUpdate - Player \t\tT: " + threadNum + " \tI: " + this.getIndex());
-        //...
-    }
-
-    @Override
-    public void destroy() {
-        tank.destroy();
-        Game.getGameManager().getPlayers().remove(this);
-    }
-
-    @Override
-    public void setThread(int th) { //test
-        threadNum = th;
     }
 
     @Override

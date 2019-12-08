@@ -1,64 +1,93 @@
 package clientApp;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import clientApp.data.*;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Game {
-    static final int SERVER_THREADS = 4;
-    static final int MAX_PLAYERS = 4;
     static final int SERVER_SOCKET_NUM = 8100;
-    static int threadnum = 0; //test
 
     private static GameManager gameManager;
-    private ServerSocket serverSocket;
+    private ExecutorService executorService;
+    private Socket socket;
+    private Player player;
 
-    class ClientTask implements Runnable{
-        private int playerIndex;
 
-        ClientTask(int index){
-            playerIndex = index;
-        }
-
-        @Override
-        public void run() {
-            new UserKeyListener(playerIndex);
-        }
-    }
-
-    class ClientGUITask implements Runnable {
-
-        @Override
-        public void run() {
-            //while(true){
-            //blokada rysowania
-            //...
-
-            //rysowanie obiektów na ekranie
-            //...
-            //}
-        }
+    public Game(){
+        gameManager = new GameManager();
     }
 
     public static GameManager getGameManager(){
         return gameManager;
     }
 
-    private void runClientMode() throws IOException, ClassNotFoundException, BrokenBarrierException, InterruptedException {
-        gameManager = new GameManager(false);
-        ExecutorService executorService = Executors.newFixedThreadPool(1);
-        int playerIndex;
+    class ClientDataTransmitterOut implements Runnable {
+        private Socket socket;
+        private Player player;
+        private ObjectOutputStream outputStream;
 
-        //łączenie z serverem
-        Socket socket  = new Socket();
+        public ClientDataTransmitterOut(Socket socket, Player player) throws IOException {
+            this.socket = socket;
+            this.player = player;
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+        }
+
+        @Override
+        public void run() {
+            GameMessage message;
+
+            while(true){
+                try {
+                    if(!gameManager.getMessageQueueToSend().isEmpty()){
+                        message = gameManager.getMessageQueueToSend().poll();
+                        outputStream.writeObject(message);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace(); return;
+                }
+            }
+        }
+    }
+
+    class ClientDataTransmitterIn implements Runnable {
+        private Socket socket;
+        private Player player;
+        private ObjectInputStream inputStream;
+
+        public ClientDataTransmitterIn(Socket socket, Player player) throws IOException {
+            this.socket = socket;
+            this.player = player;
+            inputStream = new ObjectInputStream(socket.getInputStream());
+        }
+
+        @Override
+        public void run() {
+            Object data;
+            GameMessage message;
+
+            while(true){
+                try {
+                    data = inputStream.readObject();
+                    message = (GameMessage) data;
+                    gameManager.getMessageQueueReceived().add(message);
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace(); return;
+                }
+            }
+        }
+    }
+
+    public void clientModeConnectToTheServer() throws IOException, ClassNotFoundException {
+        executorService = Executors.newFixedThreadPool(2);
+
+        //laczenie z serverem
+        socket  = new Socket();
         Scanner consoleIn = new Scanner(System.in);
         String hostName;
         do{
@@ -79,47 +108,35 @@ public class Game {
             break;
         } while(true);
 
-        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+        //ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
-        //uruchomienie wątku GUI klienta (Client Task)
-        //...
+        //odebranie nadanego indeksu Gracza
+        player = (Player) inputStream.readObject();
+    }
 
-        //obiektu gracza w celu uzgodnienia indeksu gracza
-        Player player = (Player) inputStream.readObject();
-        playerIndex = player.getIndex();
-
-        executorService.execute(new ClientTask(playerIndex));
-
-        //oczekiwanie na otrzymanie danych poczatkowych gry i odbiór tych danych
+    public void clientModeFirstCycle() throws IOException, ClassNotFoundException {
+        ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
+        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         Object data;
         GameMessage message = new GameMessage("");
+
+        //oczekiwanie na otrzymanie danych poczatkowych gry i odbiór tych danych
         do{
+
             data = inputStream.readObject();
+
             if(data instanceof Player)
                 gameManager.getPlayers().add((Player)data);
             else if(data instanceof Tank)
-                gameManager.getTanks().add((Tank)data);
+                gameManager.getTanks().add(new TankSprite((Tank)data));
             else if(data instanceof Bullet)
-                gameManager.getBullets().add((Bullet)data);
+                gameManager.getBullets().add(new BulletSprite((Bullet)data));
             else if(data instanceof Map)
                 gameManager.setMap((Map)data);
             else if(data instanceof GameMessage)
                 message = (GameMessage) data;
         }while(!message.getMessage().matches("DATA_END"));
-
-    /*
-        ///test przychodzacych daych
-        System.out.println("###DANE_POCZATKOWE:");
-        for(Player p : gameManager.getPlayers())
-            System.out.println(p);
-        for(Tank t : gameManager.getTanks())
-            System.out.println(t);
-        for(Bullet b : gameManager.getBullets())
-            System.out.println(b);
-        System.out.println("###END_DANE_POCZATKOWE\n");
-        ///koniec testu
-    */
 
         //potwierdzenie otrzymania danych poczatkowych i gotowosci do gry
         message.setMessage("READY");
@@ -133,68 +150,20 @@ public class Game {
                 message = (GameMessage) data;
         }while(!message.getMessage().matches("START"));
 
-        while(true){
-        //for(int i=0; i<2; ++i){
-            //wykrywanie poczynan gracz aw klase UserKeyListener
-            //...
-
-            //wysłanie wszystkich wiadomosci do servera
-            try {
-                synchronized (gameManager.getMessageQueue()){
-                    for(GameMessage m : gameManager.getMessageQueue())
-                        outputStream.writeObject(m);
-                    gameManager.getMessageQueue().clear();
-                }
-                outputStream.writeObject(new GameMessage("DATA_END"));
-            } catch (IOException e) {
-                e.printStackTrace(); return;
-            }
-
-            //odebranie przeliczonych danych z servera i aktualizacja danych
-            gameManager.getPlayers().clear();
-            gameManager.getBullets().clear();
-            gameManager.getTanks().clear();
-            message = new GameMessage("");
-            do{
-                data = inputStream.readObject();
-                if(data instanceof Player) {
-                    gameManager.getPlayers().add((Player) data);
-                } else if(data instanceof Tank){
-                    gameManager.getTanks().add((Tank) data);
-                } else if(data instanceof Bullet) {
-                    gameManager.getBullets().add((Bullet) data);
-                } else if(data instanceof GameMessage)
-                    message = (GameMessage) data;
-            }while(!message.getMessage().matches("DATA_END"));
-
-
-            ///test przychodzacych daych
-            System.out.println("###DANE_GRY:");
-            for(Player p : gameManager.getPlayers())
-                System.out.println(p);
-            for(Tank t : gameManager.getTanks())
-                System.out.println(t);
-            for(Bullet b : gameManager.getBullets())
-                System.out.println(b);
-            System.out.println("###END_DANE_GRY\n");
-            ///koniec testu
-
-
-            //wstrzymanie czasu gry
-            //...
-        }
-
-        //executorService.shutdownNow();
+        executorService.execute(new ClientDataTransmitterOut(socket, player));
+        executorService.execute(new ClientDataTransmitterIn(socket, player));
     }
 
-    public static void main(String[] args){
-        Game game = new Game();
+    public void clientModeCycle() throws IOException, ClassNotFoundException {
+        Object data;
+        GameMessage message;
 
-        //wybór trybu aplikacji (client/server)
-        try {
-            game.runClientMode();
-        } catch (InterruptedException | IOException | BrokenBarrierException | ClassNotFoundException e) {
-            e.printStackTrace();
+        // aktualizacja danych
+        ConcurrentLinkedQueue<GameMessage> messages = gameManager.getMessageQueueReceived();
+        while(!messages.isEmpty()){
+            message = messages.poll();
+            //...dzialania w zaleznosci od odebranej wiadomosci
+            //....
         }
     }
 }

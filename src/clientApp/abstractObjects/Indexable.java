@@ -1,4 +1,4 @@
-package clientApp;
+package clientApp.abstractObjects;
 
 public abstract class Indexable implements Comparable<Indexable>{
     private static int objectsIndex = 1;

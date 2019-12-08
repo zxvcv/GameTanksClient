@@ -1,6 +1,9 @@
-package clientApp;
+package clientApp.data;
 
-public class Position implements Movable, Sendable{
+import clientApp.abstractObjects.Movable;
+import clientApp.abstractObjects.Sendable;
+
+public class Position implements Movable, Sendable {
     private double x;
     private double y;
 

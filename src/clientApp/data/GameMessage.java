@@ -1,6 +1,8 @@
-package clientApp;
+package clientApp.data;
 
-public class GameMessage implements Sendable{
+import clientApp.abstractObjects.Sendable;
+
+public class GameMessage implements Sendable {
     private String message;
     private int playerIndex;
 

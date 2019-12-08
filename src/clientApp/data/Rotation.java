@@ -1,8 +1,9 @@
-package clientApp;
+package clientApp.data;
 
-import clientApp.Rotatable;
+import clientApp.abstractObjects.Rotatable;
+import clientApp.abstractObjects.Sendable;
 
-public class Rotation implements Rotatable, Sendable{
+public class Rotation implements Rotatable, Sendable {
     int rotation;
 
     public Rotation(int _rotation){

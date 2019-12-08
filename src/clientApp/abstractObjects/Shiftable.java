@@ -1,7 +1,6 @@
-package clientApp;
+package clientApp.abstractObjects;
 
-import clientApp.Indexable;
-import clientApp.Movable;
+import clientApp.data.Position;
 
 import static java.lang.Math.*;
 

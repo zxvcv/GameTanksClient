@@ -1,4 +1,4 @@
-package clientApp;
+package clientApp.abstractObjects;
 
 import java.io.Serializable;
 
