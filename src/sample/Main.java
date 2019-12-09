@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
-    private GameManager gameManager = Game.getGameManager();
+    private GameManager gameManager;
     private int playerIndex;
     private Long lastNanoTime;
 
@@ -22,6 +22,7 @@ public class Main extends Application {
     public void start(Stage theStage)
     {
         Game game = new Game();
+        gameManager = Game.getGameManager();
         try {
             game.connectToTheServer();
             game.setupCycle();
@@ -66,7 +67,7 @@ public class Main extends Application {
 
                 // render
                 gc.clearRect(0, 0, 512,512);
-                //gameManager.display(gc);
+                gameManager.display(gc);
             }
         }.start();
 

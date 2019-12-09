@@ -3,6 +3,33 @@
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="working project v0.2.0&#10; -ujednolicenie obiektów w pakiecie app.data.send&#10; -łącznie, przesyłanie danych działa bez rzucana wyjątków&#10; -podział obiektów na pakiety rysowania i wysylana&#10; -naprawiony schemat tworzenia strumieni danych">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Block.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Block.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Indexable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Indexable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Shiftable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Shiftable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Transformable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Transformable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/draw/TankSprite.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/draw/TankSprite.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Bullet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Bullet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/GrassBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/GrassBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Position.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Position.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Rotation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Rotation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/StoneBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/StoneBlock.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Tank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Tank.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/sample/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/sample/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/sample/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/abstractObjects/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/abstractObjects/Block.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/abstractObjects/Indexable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/abstractObjects/Indexable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/abstractObjects/Shiftable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/abstractObjects/Shiftable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/abstractObjects/Transformable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/abstractObjects/Transformable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/send/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Bullet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/send/GrassBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/GrassBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/send/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/send/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/send/Rotation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Rotation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/send/StoneBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/StoneBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/send/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Tank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
