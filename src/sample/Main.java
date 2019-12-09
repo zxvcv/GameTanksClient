@@ -1,8 +1,8 @@
 package sample;
 
-import clientApp.Game;
-import clientApp.GameManager;
-import clientApp.data.GameMessage;
+import app.Game;
+import app.GameManager;
+import app.data.send.GameMessage;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
