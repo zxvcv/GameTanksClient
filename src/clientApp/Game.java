@@ -134,7 +134,7 @@ public class Game {
         } while(true);
 
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-
+        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         //odebranie nadanego indeksu Gracza
         player = (Player) inputStream.readObject();
     }
