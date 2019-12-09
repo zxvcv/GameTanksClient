@@ -21,6 +21,14 @@ public class Main extends Application {
     @Override
     public void start(Stage theStage)
     {
+        Game game = new Game();
+        try {
+            game.connectToTheServer();
+            game.setupCycle();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         theStage.setTitle( "Client App" );
 
         Group root = new Group();
@@ -58,7 +66,7 @@ public class Main extends Application {
 
                 // render
                 gc.clearRect(0, 0, 512,512);
-                gameManager.display(gc);
+                //gameManager.display(gc);
             }
         }.start();
 
@@ -68,14 +76,5 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-
-        Game game = new Game();
-        try {
-            game.clientModeConnectToTheServer();
-            game.clientModeFirstCycle();
-            game.clientModeCycle();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

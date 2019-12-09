@@ -83,8 +83,33 @@ public class Game {
         }
     }
 
-    public void clientModeConnectToTheServer() throws IOException, ClassNotFoundException {
-        executorService = Executors.newFixedThreadPool(2);
+    class ClientCycleGame implements Runnable {
+        private Socket socket;
+        private Player player;
+        private ConcurrentLinkedQueue<GameMessage> messages;
+
+        public ClientCycleGame(Socket socket, Player player){
+            this.socket = socket;
+            this.player = player;
+        }
+
+        @Override
+        public void run() {
+            GameMessage message;
+
+            while(true){
+                messages = gameManager.getMessageQueueReceived();
+                while(!messages.isEmpty()){
+                    message = messages.poll();
+                    //...dzialania w zaleznosci od odebranej wiadomosci
+                    //....
+                }
+            }
+        }
+    }
+
+    public void connectToTheServer() throws IOException, ClassNotFoundException {
+        executorService = Executors.newFixedThreadPool(3);
 
         //laczenie z serverem
         socket  = new Socket();
@@ -109,13 +134,12 @@ public class Game {
         } while(true);
 
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-        //ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
 
         //odebranie nadanego indeksu Gracza
         player = (Player) inputStream.readObject();
     }
 
-    public void clientModeFirstCycle() throws IOException, ClassNotFoundException {
+    public void setupCycle() throws IOException, ClassNotFoundException {
         ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         Object data;
@@ -152,18 +176,6 @@ public class Game {
 
         executorService.execute(new ClientDataTransmitterOut(socket, player));
         executorService.execute(new ClientDataTransmitterIn(socket, player));
-    }
-
-    public void clientModeCycle() throws IOException, ClassNotFoundException {
-        Object data;
-        GameMessage message;
-
-        // aktualizacja danych
-        ConcurrentLinkedQueue<GameMessage> messages = gameManager.getMessageQueueReceived();
-        while(!messages.isEmpty()){
-            message = messages.poll();
-            //...dzialania w zaleznosci od odebranej wiadomosci
-            //....
-        }
+        executorService.execute(new ClientCycleGame(socket, player));
     }
 }
