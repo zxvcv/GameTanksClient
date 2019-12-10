@@ -36,7 +36,7 @@ public class Game {
         private Player player;
         private ObjectOutputStream outputStream;
 
-        public ClientDataTransmitterOut(Socket socket, Player player) throws IOException {
+        public ClientDataTransmitterOut(Socket socket, Player player) {
             this.socket = socket;
             this.player = player;
             outputStream = Game.outputStream;
@@ -50,6 +50,7 @@ public class Game {
                 try {
                     if(!gameManager.getMessageQueueToSend().isEmpty()){
                         message = gameManager.getMessageQueueToSend().poll();
+                        System.out.println("sendingMessage: " + message.getMessage());
                         outputStream.writeObject(message);
                     }
                 } catch (IOException e) {

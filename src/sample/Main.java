@@ -5,10 +5,12 @@ import app.GameManager;
 import app.data.send.GameMessage;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -39,17 +41,59 @@ public class Main extends Application {
         Canvas canvas = new Canvas( 512, 512 );
         root.getChildren().add( canvas );
 
-        theScene.setOnKeyReleased(e -> {
-                    String code = e.getCode().toString();
-                    switch (code) {
-                        case "s":
-                            gameManager.getMessageQueueToSend().add(new GameMessage("SHOOT", playerIndex));
-                            break;
-                        case "a":
-                            gameManager.getMessageQueueToSend().add(new GameMessage("SHOW", playerIndex));
-                            break;
-                        default:
-                            break;
+        theScene.setOnKeyPressed(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        switch (code) {
+                            case "W":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED W", playerIndex));
+                                break;
+                            case "A":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED A", playerIndex));
+                                break;
+                            case "S":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED S", playerIndex));
+                                break;
+                            case "D":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED D", playerIndex));
+                                break;
+                            case "SPACE":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED SPACE", playerIndex));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+        theScene.setOnKeyReleased(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        switch (code) {
+                            case "W":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED W", playerIndex));
+                                break;
+                            case "A":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED A", playerIndex));
+                                break;
+                            case "S":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED S", playerIndex));
+                                break;
+                            case "D":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED D", playerIndex));
+                                break;
+                            case "SPACE":
+                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED SPACE", playerIndex));
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 });
 
