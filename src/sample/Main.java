@@ -2,6 +2,7 @@ package sample;
 
 import app.Game;
 import app.GameManager;
+import app.abstractObjects.Drawable;
 import app.data.send.GameMessage;
 import app.data.send.Player;
 import javafx.animation.AnimationTimer;
@@ -23,7 +24,14 @@ public class Main extends Application {
     @Override
     public void start(Stage theStage)
     {
-        Game game = new Game();
+        theStage.setTitle( "Client App" );
+        Group root = new Group();
+        Scene theScene = new Scene( root );
+        theStage.setScene( theScene );
+        Canvas canvas = new Canvas( 512, 512 );
+        root.getChildren().add( canvas );
+
+        Game game = new Game(root);
         gameManager = Game.getGameManager();
         try {
             game.connectToTheServer();
@@ -32,14 +40,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        theStage.setTitle( "Client App" );
-
-        Group root = new Group();
-        Scene theScene = new Scene( root );
-        theStage.setScene( theScene );
-
-        Canvas canvas = new Canvas( 512, 512 );
-        root.getChildren().add( canvas );
 
         theScene.setOnKeyPressed(
                 new EventHandler<KeyEvent>()
@@ -89,7 +89,8 @@ public class Main extends Application {
                     }
                 });
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        //GraphicsContext gc = canvas.getGraphicsContext2D();
+
 
         lastNanoTime = System.nanoTime();
 
@@ -102,8 +103,14 @@ public class Main extends Application {
                 lastNanoTime = currentNanoTime;
 
                 // render
-                gc.clearRect(0, 0, 512,512);
-                gameManager.display(gc);
+                //gc.clearRect(0, 0, 512,512);
+                //gameManager.display(root);
+
+                while(!Game.getObjectsToDisplay().isEmpty())
+                    Game.getObjectsToDisplay().poll().display(root);
+
+                gameManager.render();
+
             }
         }.start();
 

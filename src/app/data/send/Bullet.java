@@ -14,7 +14,6 @@ public class Bullet extends Transformable implements GameObject, CollisionManage
     public Bullet(Bullet bullet){
         super(bullet.rotation, bullet.position, bullet.getIndex());
         this.owner = bullet.owner;
-        setIndex(bullet.getIndex());
     }
 
     public Bullet(Position position, Rotation rotation, Tank owner, int index){
@@ -29,11 +28,6 @@ public class Bullet extends Transformable implements GameObject, CollisionManage
     @Override
     public void destroy() {
         Game.getGameManager().getBullets().remove(this);
-    }
-
-    @Override
-    public void display() {
-
     }
 
     @Override
@@ -81,10 +75,10 @@ public class Bullet extends Transformable implements GameObject, CollisionManage
     }
 
     @Override
-    public LinkedList<Drawable> checkCollisions(Map map, ConcurrentLinkedQueue<Tank> tanks, ConcurrentLinkedQueue<Bullet> bullets) {
+    public LinkedList<GameObject> checkCollisions(Map map, ConcurrentLinkedQueue<Tank> tanks, ConcurrentLinkedQueue<Bullet> bullets) {
         Block[] blocks = map.getClosestBlocks(this.position);
-        LinkedList<Drawable> collisions = new LinkedList<>();
-
+        LinkedList<GameObject> collisions = new LinkedList<>();
+        /*
         for(Block b : blocks){
             if(this.distanceToObj(b) <= 0)
                 collisions.add(b);
@@ -93,6 +87,8 @@ public class Bullet extends Transformable implements GameObject, CollisionManage
             if(this.distanceToObj(t) <= 0)
                 collisions.add(t);
         }
+
+         */
         return collisions;
     }
 

@@ -1,15 +1,19 @@
 package app;
 
+import app.abstractObjects.Drawable;
 import app.abstractObjects.Indexable;
 import app.data.draw.BulletSprite;
 import app.data.draw.TankSprite;
 import app.data.send.*;
+import javafx.scene.Group;
+import sample.Main;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
@@ -19,13 +23,16 @@ public class Game {
     private static GameManager gameManager;
     private ExecutorService executorService;
     private Socket socket;
+    private Group root;
     private static ObjectInputStream inputStream;
     private static ObjectOutputStream outputStream;
     private static Player player;
     private static Indexer indexer = new Indexer();
+    private static LinkedList<Drawable> objectsToDisplay = new LinkedList<>();
 
-    public Game(){
+    public Game(Group root){
         gameManager = new GameManager();
+        this.root = root;
     }
 
     public static GameManager getGameManager(){
@@ -38,6 +45,10 @@ public class Game {
 
     public static Indexer getIndexer() {
         return indexer;
+    }
+
+    public static LinkedList<Drawable> getObjectsToDisplay() {
+        return objectsToDisplay;
     }
 
     class ClientDataTransmitterOut implements Runnable {
@@ -131,7 +142,7 @@ public class Game {
                         }
 
                         if(message.getMessage().startsWith("BULLET")){
-                            Bullet bullet = gameManager.getBulletWithIndex(messageData.getObjectIndex());
+                            BulletSprite bullet = (BulletSprite)gameManager.getBulletWithIndex(messageData.getObjectIndex());
                             System.out.println("INbullet: "+ messageData.getObjectIndex());
                             //jezeli nie ma takiego pocisku to znaczy ze jest nowy i trzeba go stworzyc
                             if(bullet == null){
@@ -139,6 +150,8 @@ public class Game {
                                 Tank owner = player.getTank();
                                 bullet = new BulletSprite(messageData.getPosition(), messageData.getRotation(), owner, messageData.getObjectIndex());
                                 gameManager.getBullets().add(bullet);
+                                objectsToDisplay.add(bullet);
+                                //bullet.display(root);
                             } else {
                                 bullet.getPosition().setPosition(messageData.getPosition().getX(), messageData.getPosition().getY());
                                 bullet.getRotation().setRotation(messageData.getRotation().getRotation());
@@ -195,11 +208,15 @@ public class Game {
 
             if(data instanceof Player)
                 gameManager.getPlayers().add((Player)data);
-            else if(data instanceof Tank)
-                gameManager.getTanks().add(new TankSprite((Tank)data));
-            else if(data instanceof Bullet)
-                gameManager.getBullets().add(new BulletSprite((Bullet)data));
-            else if(data instanceof Map)
+            else if(data instanceof Tank){
+                TankSprite ts = new TankSprite((Tank)data);
+                ts.display(root);
+                gameManager.getTanks().add(ts);
+            } else if(data instanceof Bullet){
+                BulletSprite bs = new BulletSprite((Bullet)data);
+                bs.display(root);
+                gameManager.getBullets().add(bs);
+            } else if(data instanceof Map)
                 gameManager.setMap((Map)data);
             else if(data instanceof GameMessage)
                 message = (GameMessage) data;

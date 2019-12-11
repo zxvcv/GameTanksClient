@@ -3,6 +3,7 @@ package app;
 import app.data.draw.BulletSprite;
 import app.data.draw.TankSprite;
 import app.data.send.*;
+import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -53,11 +54,11 @@ public class GameManager{
         return messageQueueReceived;
     }
 
-    public void display(GraphicsContext gc){
+    public void render(){
         for(Tank t : tanks)
-            ((TankSprite)t).render(gc);
+            ((TankSprite)t).render();
         for(Bullet b : bullets)
-            ((BulletSprite)b).render(gc);
+            ((BulletSprite)b).render();
     }
 
     public Player getPlayerWithIndex(int index){
