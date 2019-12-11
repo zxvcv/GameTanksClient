@@ -20,7 +20,7 @@ public class Game {
     private Socket socket;
     private static ObjectInputStream inputStream;
     private static ObjectOutputStream outputStream;
-    private Player player;
+    private static Player player;
 
 
     public Game(){
@@ -29,6 +29,10 @@ public class Game {
 
     public static GameManager getGameManager(){
         return gameManager;
+    }
+
+    public static Player getPlayer() {
+        return player;
     }
 
     class ClientDataTransmitterOut implements Runnable {
@@ -50,7 +54,7 @@ public class Game {
                 try {
                     if(!gameManager.getMessageQueueToSend().isEmpty()){
                         message = gameManager.getMessageQueueToSend().poll();
-                        System.out.println("sendingMessage: " + message.getMessage());
+                        //System.out.println("sendingMessage: " + message.getMessage());
                         outputStream.writeObject(message);
                     }
                 } catch (IOException e) {
@@ -100,12 +104,20 @@ public class Game {
         @Override
         public void run() {
             GameMessage message;
+            GameMessageData messageData;
 
             while(true){
                 while(!gameManager.getMessageQueueReceived().isEmpty()){
                     message = gameManager.getMessageQueueReceived().poll();
                     //...dzialania w zaleznosci od odebranej wiadomosci
-                    //....
+
+                    if(message.getMessage().startsWith("TANK")){
+                        messageData = (GameMessageData)message;
+                        System.out.print("[" + messageData.getMessage() + "]");
+                        System.out.print("[x:" + messageData.getPosition().getX() + "] [y:" + messageData.getPosition().getY() + "]");
+                        System.out.println("[r:" + messageData.getRotation().getRotation() + "]");
+                    }
+
                 }
             }
         }
@@ -140,11 +152,12 @@ public class Game {
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         //odebranie nadanego indeksu Gracza
         player = (Player) inputStream.readObject();
+        System.out.println("THIS PLAYER INDEX: " + player.getIndex());
     }
 
     public void setupCycle() throws IOException, ClassNotFoundException {
         Object data;
-        GameMessage message = new GameMessage("");
+        GameMessage message = new GameMessage("", 0);
 
         //oczekiwanie na otrzymanie danych poczatkowych gry i odbiór tych danych
         do{
@@ -168,7 +181,7 @@ public class Game {
         outputStream.writeObject(message);
 
         //oczekiwanie na sygnał startu gry od servera
-        message = new GameMessage("");
+        message = new GameMessage("", 0);
         do{
             data = inputStream.readObject();
             if(data instanceof GameMessage)

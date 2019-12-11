@@ -3,6 +3,7 @@ package sample;
 import app.Game;
 import app.GameManager;
 import app.data.send.GameMessage;
+import app.data.send.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -17,7 +18,6 @@ import java.io.IOException;
 
 public class Main extends Application {
     private GameManager gameManager;
-    private int playerIndex;
     private Long lastNanoTime;
 
     @Override
@@ -46,22 +46,18 @@ public class Main extends Application {
                 {
                     public void handle(KeyEvent e)
                     {
+                        Player player = Game.getPlayer();
                         String code = e.getCode().toString();
+
+                        String message = "PRESSED ";
                         switch (code) {
-                            case "W":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED W", playerIndex));
-                                break;
-                            case "A":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED A", playerIndex));
-                                break;
-                            case "S":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED S", playerIndex));
-                                break;
-                            case "D":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED D", playerIndex));
-                                break;
+                            case "W": case "A": case "S": case "D":
                             case "SPACE":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("PRESSED SPACE", playerIndex));
+                                if(!player.getKeysLog().getKey(code)){
+                                    player.getKeysLog().setKeyState(code, true);
+                                    message +=code;
+                                    gameManager.getMessageQueueToSend().add(new GameMessage(message, player.getIndex()));
+                                }
                                 break;
                             default:
                                 break;
@@ -74,22 +70,18 @@ public class Main extends Application {
                 {
                     public void handle(KeyEvent e)
                     {
+                        Player player = Game.getPlayer();
                         String code = e.getCode().toString();
+
+                        String message = "RELEASED ";
                         switch (code) {
-                            case "W":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED W", playerIndex));
-                                break;
-                            case "A":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED A", playerIndex));
-                                break;
-                            case "S":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED S", playerIndex));
-                                break;
-                            case "D":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED D", playerIndex));
-                                break;
+                            case "W": case "A": case "S": case "D":
                             case "SPACE":
-                                gameManager.getMessageQueueToSend().add(new GameMessage("RELEASED SPACE", playerIndex));
+                                if(player.getKeysLog().getKey(code)){
+                                    player.getKeysLog().setKeyState(code, false);
+                                    message +=code;
+                                    gameManager.getMessageQueueToSend().add(new GameMessage(message, player.getIndex()));
+                                }
                                 break;
                             default:
                                 break;
