@@ -13,17 +13,17 @@ public class BulletSprite extends Bullet implements Sprite {
     private Image image;
 
     public BulletSprite(Bullet bullet){
-        super(bullet.getPosition(), bullet.getRotation(), bullet.getOwner());
+        super(bullet);
         image = SpriteManager.bulletSprite;
     }
 
-    public BulletSprite(Position position, Rotation rotation, Tank owner) {
-        super(position, rotation, owner);
+    public BulletSprite(Position position, Rotation rotation, Tank owner, int index) {
+        super(position, rotation, owner, index);
         image = SpriteManager.bulletSprite;
     }
 
     @Override
     public void render(GraphicsContext gc) {
-
+        gc.drawImage(image, getPosition().getX(), getPosition().getY());
     }
 }

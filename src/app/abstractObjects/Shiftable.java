@@ -9,7 +9,8 @@ import static java.lang.Math.*;
 public abstract class Shiftable extends Indexable implements Movable, Serializable {
     protected Position position;
 
-    public Shiftable(Position position){
+    public Shiftable(Position position, int index){
+        super(index);
         this.position = position;
     }
 

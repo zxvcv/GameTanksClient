@@ -17,8 +17,8 @@ public class TankSprite extends Tank implements Sprite {
         image = SpriteManager.tankSprite;
     }
 
-    public TankSprite(Position position, Rotation rotation, Player player) {
-        super(position, rotation, player);
+    public TankSprite(Position position, Rotation rotation, Player player, int index) {
+        super(position, rotation, player, index);
         image = SpriteManager.tankSprite;
     }
 

@@ -1,5 +1,6 @@
 package app;
 
+import app.abstractObjects.Indexable;
 import app.data.draw.BulletSprite;
 import app.data.draw.TankSprite;
 import app.data.send.*;
@@ -21,7 +22,7 @@ public class Game {
     private static ObjectInputStream inputStream;
     private static ObjectOutputStream outputStream;
     private static Player player;
-
+    private static Indexer indexer = new Indexer();
 
     public Game(){
         gameManager = new GameManager();
@@ -33,6 +34,10 @@ public class Game {
 
     public static Player getPlayer() {
         return player;
+    }
+
+    public static Indexer getIndexer() {
+        return indexer;
     }
 
     class ClientDataTransmitterOut implements Runnable {
@@ -109,15 +114,39 @@ public class Game {
             while(true){
                 while(!gameManager.getMessageQueueReceived().isEmpty()){
                     message = gameManager.getMessageQueueReceived().poll();
-                    //...dzialania w zaleznosci od odebranej wiadomosci
 
-                    if(message.getMessage().startsWith("TANK")){
+                    //aktualizacja obiektów klienta
+                    if(message instanceof GameMessageData){
                         messageData = (GameMessageData)message;
-                        System.out.print("[" + messageData.getMessage() + "]");
-                        System.out.print("[x:" + messageData.getPosition().getX() + "] [y:" + messageData.getPosition().getY() + "]");
-                        System.out.println("[r:" + messageData.getRotation().getRotation() + "]");
-                    }
 
+                        if(message.getMessage().startsWith("TANK")){
+                            Tank tank = gameManager.getTankWithIndex(messageData.getObjectIndex());
+
+                            tank.getPosition().setPosition(messageData.getPosition().getX(), messageData.getPosition().getY());
+                            tank.getRotation().setRotation(messageData.getRotation().getRotation());
+
+                            //System.out.print("[" + messageData.getMessage() + "]");
+                            //System.out.print("[x:" + messageData.getPosition().getX() + "] [y:" + messageData.getPosition().getY() + "]");
+                            //System.out.println("[r:" + messageData.getRotation().getRotation() + "]");
+                        }
+
+                        if(message.getMessage().startsWith("BULLET")){
+                            Bullet bullet = gameManager.getBulletWithIndex(messageData.getObjectIndex());
+                            System.out.println("INbullet: "+ messageData.getObjectIndex());
+                            //jezeli nie ma takiego pocisku to znaczy ze jest nowy i trzeba go stworzyc
+                            if(bullet == null){
+                                Player player = gameManager.getPlayerWithIndex(messageData.getPlayerIndex());
+                                Tank owner = player.getTank();
+                                bullet = new BulletSprite(messageData.getPosition(), messageData.getRotation(), owner, messageData.getObjectIndex());
+                                gameManager.getBullets().add(bullet);
+                            } else {
+                                bullet.getPosition().setPosition(messageData.getPosition().getX(), messageData.getPosition().getY());
+                                bullet.getRotation().setRotation(messageData.getRotation().getRotation());
+                            }
+                        }
+                    }else{
+                        System.out.println("odebrano i odrzucono GameMessage");
+                    }
                 }
             }
         }
@@ -175,6 +204,21 @@ public class Game {
             else if(data instanceof GameMessage)
                 message = (GameMessage) data;
         }while(!message.getMessage().matches("DATA_END"));
+
+        //###################################tests
+        System.out.print("PLAYERS: ");
+        for(Player p : gameManager.getPlayers())
+            System.out.print(p.getIndex());
+        System.out.println();
+        System.out.print("TANKS: ");
+        for(Tank t : gameManager.getTanks())
+            System.out.print(t.getIndex());
+        System.out.println();
+        System.out.print("BULLETS: ");
+        for(Bullet b : gameManager.getBullets())
+            System.out.print(b.getIndex());
+        System.out.println();
+        //###################################ENDtests
 
         //potwierdzenie otrzymania danych poczatkowych i gotowosci do gry
         message.setMessage("READY");

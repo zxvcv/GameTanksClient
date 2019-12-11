@@ -18,7 +18,7 @@ public class GameManager{
 
     public GameManager(){
         tanks = new ConcurrentLinkedQueue<>();
-        map = new Map();
+        map = new Map(Game.getIndexer().getIndex());
         bullets = new ConcurrentLinkedQueue<>();
         players = new ConcurrentLinkedQueue<>();
         messageQueueReceived = new ConcurrentLinkedQueue<>();
@@ -58,5 +58,29 @@ public class GameManager{
             ((TankSprite)t).render(gc);
         for(Bullet b : bullets)
             ((BulletSprite)b).render(gc);
+    }
+
+    public Player getPlayerWithIndex(int index){
+        for(Player p : players) {
+            if (p.getIndex() == index)
+                return p;
+        }
+        return null;
+    }
+
+    public Tank getTankWithIndex(int index){
+        for(Tank t : tanks) {
+            if (t.getIndex() == index)
+                return t;
+        }
+        return null;
+    }
+
+    public Bullet getBulletWithIndex(int index){
+        for(Bullet b : bullets) {
+            if (b.getIndex() == index)
+                return b;
+        }
+        return null;
     }
 }
