@@ -1,31 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="map v0.3.2&#10; -odbieranie mapy od servera&#10; -wyswietlanie mapy na ekranie">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="collisions v0.3.3&#10; -wyjatek po wystrzeleniu paru pociskow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/GameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/GameManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Sprite.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Sprite.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/draw/BulletSprite.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/draw/BulletSprite.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/draw/TankSprite.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/draw/TankSprite.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/GrassBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/GrassBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Map.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/StoneBlock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/StoneBlock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Tank.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Tank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/bullet.png" beforeDir="false" afterPath="$PROJECT_DIR$/resources/bullet.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/SpriteManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/SpriteManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/abstractObjects/Block.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/abstractObjects/Block.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/abstractObjects/CollisionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/abstractObjects/CollisionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/abstractObjects/Shiftable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/abstractObjects/Shiftable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/draw/BulletSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/draw/BulletSprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/draw/GrassBlockSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/draw/GrassBlockSprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/draw/StoneBlockSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/draw/StoneBlockSprite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/draw/TankSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/draw/TankSprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/SpriteManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/SpriteManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Block.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Block.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/CollisionManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/CollisionManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Shiftable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/abstractObjects/Shiftable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Bullet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GameTanksClient/app/data/send/Bullet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/data/send/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Bullet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/send/GrassBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/GrassBlock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/send/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Map.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/send/StoneBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/StoneBlock.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/data/send/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Tank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -284,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576320094245</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="collisions v0.3.3&#10; -wyjatek po wystrzeleniu paru pociskow">
+      <created>1576340105452</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1576340105453</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -315,6 +308,7 @@
     <MESSAGE value="basic tank control v0.3.0&#10; -działa podstawowe sterowanie czolgiem &#10; -nowe grafiki do gry&#10; -nowe opdejscie do tyswietlania grafiki" />
     <MESSAGE value="new images v0.3.1&#10; -dodane nowe grafiki pocisku i czołgów w 4 kolorach" />
     <MESSAGE value="map v0.3.2&#10; -odbieranie mapy od servera&#10; -wyswietlanie mapy na ekranie" />
-    <option name="LAST_COMMIT_MESSAGE" value="map v0.3.2&#10; -odbieranie mapy od servera&#10; -wyswietlanie mapy na ekranie" />
+    <MESSAGE value="collisions v0.3.3&#10; -wyjatek po wystrzeleniu paru pociskow" />
+    <option name="LAST_COMMIT_MESSAGE" value="collisions v0.3.3&#10; -wyjatek po wystrzeleniu paru pociskow" />
   </component>
 </project>

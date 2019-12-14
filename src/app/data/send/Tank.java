@@ -48,8 +48,10 @@ public class Tank extends Transformable implements GameObject, Shootable, Collis
 
     @Override
     public synchronized void destroy() {
+        GameManager gameManager = Game.getGameManager();
         player.remTank();
-        Game.getGameManager().getTanks().remove(this);
+        gameManager.getMessageQueueToSend().add(new GameMessage("DESTROY", getIndex()));
+        gameManager.getTanks().remove(this);
     }
 
     @Override
@@ -97,17 +99,16 @@ public class Tank extends Transformable implements GameObject, Shootable, Collis
 
     @Override
     public void collisionUpdate() {
-        //System.out.println("collisionUpdate - serverApp.data.send.Tank \t\tT: " + threadNum + " \tI: " + this.getIndex());
-
         GameManager gm = Game.getGameManager();
         LinkedList<Shiftable> collisions = checkCollisions(gm.getMap(), gm.getTanks(), gm.getBullets());
         if(collisions.isEmpty())
             return;
-        for(Shiftable o : collisions){
-            if(o instanceof StoneBlock || o instanceof Tank)
-                position.setPosition(previousPosition.getX(), previousPosition.getY()); //cofniecie ruchu (nie mozna sie ruszyc w te strone)
-        }
 
+        for(Shiftable o : collisions){
+            if(o instanceof StoneBlock || o instanceof Tank) {
+                position.setPosition(previousPosition.getX(), previousPosition.getY()); //cofniecie ruchu (nie mozna sie ruszyc w te strone)
+            }
+        }
     }
 
     @Override
@@ -120,13 +121,13 @@ public class Tank extends Transformable implements GameObject, Shootable, Collis
         Position pos = new Position(this.position.getX(), this.position.getY());
 
         if(rotation.getRotation() == 0) //w prawo
-            pos = new Position(this.position.getX() + 40, this.position.getY() + 20);
-        if(rotation.getRotation() == 90) // w dol
-            pos = new Position(this.position.getX() + 20, this.position.getY() + 40);
-        if(rotation.getRotation() == 180) //w lewo
-            pos = new Position(this.position.getX(), this.position.getY() + 20);
-        if(rotation.getRotation() == 270) //do gory
             pos = new Position(this.position.getX() + 20, this.position.getY());
+        if(rotation.getRotation() == 90) // w dol
+            pos = new Position(this.position.getX(), this.position.getY() + 20);
+        if(rotation.getRotation() == 180) //w lewo
+            pos = new Position(this.position.getX() - 20, this.position.getY());
+        if(rotation.getRotation() == 270) //do gory
+            pos = new Position(this.position.getX(), this.position.getY() - 20);
 
         Bullet newBullet = new Bullet(pos, this.rotation, this, Game.getIndexer().getIndex());
         Game.getGameManager().getBullets().add(newBullet);
@@ -146,11 +147,11 @@ public class Tank extends Transformable implements GameObject, Shootable, Collis
 
         for(Block b : blocks){
             if(this.distanceToObj(b) <= 0)
-                if(b instanceof StoneBlock)
-                    collisions.add(b);
+                collisions.add(b);
         }
+
         for(Tank t : tanks){
-            if(this.distanceToObj(t) <= 0)
+            if(this.distanceToObj(t) <= 0 && t != this)
                 collisions.add(t);
         }
 
@@ -169,10 +170,10 @@ public class Tank extends Transformable implements GameObject, Shootable, Collis
         if(point2 instanceof Tank)
             distanceBounds = Tank.TANK_SIZE;
         else if(point2 instanceof Block)
-            distanceBounds = TANK_SIZE / 2.0 + Block.BLOCK_SIZE / 2.0;
+            distanceBounds = TANK_SIZE / 2.0 + Block.BLOCK_SIZE / 2.0 - 10;
 
-        if(Math.abs(p1.getX() - p2.getX()) <= distanceBounds || Math.abs(p1.getY() - p2.getY()) <= distanceBounds)
-            return 0;
+        if(Math.abs(p1.getX() - p2.getX()) <= distanceBounds && Math.abs(p1.getY() - p2.getY()) <= distanceBounds)
+            return -1;
         else
             return 1;
     }

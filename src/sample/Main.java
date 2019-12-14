@@ -96,6 +96,7 @@ public class Main extends Application {
 
         new AnimationTimer()
         {
+            long a;
             public void handle(long currentNanoTime)
             {
                 // calculate time since last update.
@@ -109,8 +110,12 @@ public class Main extends Application {
                 while(!Game.getObjectsToDisplay().isEmpty())
                     Game.getObjectsToDisplay().poll().display(root);
 
+                while(!Game.getObjectsToUndisplay().isEmpty()){
+                    Drawable d = Game.getObjectsToUndisplay().poll();
+                    if(d != null)
+                        d.undisplay(root);
+                }
                 gameManager.render();
-
             }
         }.start();
 

@@ -29,6 +29,7 @@ public class Game {
     private static Player player;
     private static Indexer indexer = new Indexer();
     private static LinkedList<Drawable> objectsToDisplay = new LinkedList<>();
+    private static LinkedList<Drawable> objectsToUndisplay = new LinkedList<>();
 
     public Game(Group root){
         gameManager = new GameManager();
@@ -51,6 +52,10 @@ public class Game {
         return objectsToDisplay;
     }
 
+    public static LinkedList<Drawable> getObjectsToUndisplay() {
+        return objectsToUndisplay;
+    }
+
     class ClientDataTransmitterOut implements Runnable {
         private Socket socket;
         private Player player;
@@ -70,7 +75,6 @@ public class Game {
                 try {
                     if(!gameManager.getMessageQueueToSend().isEmpty()){
                         message = gameManager.getMessageQueueToSend().poll();
-                        //System.out.println("sendingMessage: " + message.getMessage());
                         outputStream.writeObject(message);
                     }
                 } catch (IOException e) {
@@ -100,6 +104,7 @@ public class Game {
                 try {
                     data = inputStream.readObject();
                     message = (GameMessage) data;
+
                     gameManager.getMessageQueueReceived().add(message);
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace(); return;
@@ -125,25 +130,18 @@ public class Game {
             while(true){
                 while(!gameManager.getMessageQueueReceived().isEmpty()){
                     message = gameManager.getMessageQueueReceived().poll();
-
                     //aktualizacja obiektów klienta
                     if(message instanceof GameMessageData){
                         messageData = (GameMessageData)message;
-
                         if(message.getMessage().startsWith("TANK")){
                             Tank tank = gameManager.getTankWithIndex(messageData.getObjectIndex());
 
                             tank.getPosition().setPosition(messageData.getPosition().getX(), messageData.getPosition().getY());
                             tank.getRotation().setRotation(messageData.getRotation().getRotation());
-
-                            //System.out.print("[" + messageData.getMessage() + "]");
-                            //System.out.print("[x:" + messageData.getPosition().getX() + "] [y:" + messageData.getPosition().getY() + "]");
-                            //System.out.println("[r:" + messageData.getRotation().getRotation() + "]");
                         }
-
                         if(message.getMessage().startsWith("BULLET")){
                             BulletSprite bullet = (BulletSprite)gameManager.getBulletWithIndex(messageData.getObjectIndex());
-                            System.out.println("INbullet: "+ messageData.getObjectIndex());
+
                             //jezeli nie ma takiego pocisku to znaczy ze jest nowy i trzeba go stworzyc
                             if(bullet == null){
                                 Player player = gameManager.getPlayerWithIndex(messageData.getPlayerIndex());
@@ -151,14 +149,27 @@ public class Game {
                                 bullet = new BulletSprite(messageData.getPosition(), messageData.getRotation(), owner, messageData.getObjectIndex());
                                 gameManager.getBullets().add(bullet);
                                 objectsToDisplay.add(bullet);
-                                //bullet.display(root);
                             } else {
                                 bullet.getPosition().setPosition(messageData.getPosition().getX(), messageData.getPosition().getY());
                                 bullet.getRotation().setRotation(messageData.getRotation().getRotation());
                             }
                         }
+                    }else if(message != null){
+                        if(message.getMessage().startsWith("DESTROY")){
+                            if(message.getMessage().endsWith("BULLET")){
+                                BulletSprite bs = (BulletSprite)gameManager.getBulletWithIndex(message.getPlayerIndex());
+                                objectsToUndisplay.add(bs);
+                                gameManager.getBullets().remove(bs);
+                            }
+                            if(message.getMessage().endsWith("TANK")){
+                                TankSprite ts = (TankSprite)gameManager.getTankWithIndex(message.getPlayerIndex());
+                                objectsToUndisplay.add(ts);
+                                gameManager.getTanks().remove(ts);
+                            }
+                        }
                     }else{
-                        System.out.println("odebrano i odrzucono GameMessage");
+                        System.out.println("null message!");
+
                     }
                 }
             }
@@ -175,6 +186,7 @@ public class Game {
         do{
             System.out.print("set host name, or 0 to exit: ");
             hostName = consoleIn.nextLine();
+            //hostName = "127.0.0.1";
             if(hostName.matches("0")) {
                 System.out.println("[I] server shutdown");
                 return;

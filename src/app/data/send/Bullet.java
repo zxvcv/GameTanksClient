@@ -28,7 +28,9 @@ public class Bullet extends Transformable implements GameObject, CollisionManage
 
     @Override
     public void destroy() {
-        Game.getGameManager().getBullets().remove(this);
+        GameManager gameManager = Game.getGameManager();
+        gameManager.getMessageQueueToSend().add(new GameMessage("DESTROY", getIndex()));
+        gameManager.getBullets().remove(this);
     }
 
     @Override
@@ -54,8 +56,6 @@ public class Bullet extends Transformable implements GameObject, CollisionManage
 
     @Override
     public void collisionUpdate() {
-        //System.out.println("collisionUpdate - serverApp.data.send.Bullet \tT: " + threadNum + " \tI: " + this.getIndex());
-
         GameManager gm = Game.getGameManager();
         LinkedList<Shiftable> collisions = checkCollisions(gm.getMap(), gm.getTanks(), gm.getBullets());
         if(collisions.isEmpty())
@@ -108,8 +108,8 @@ public class Bullet extends Transformable implements GameObject, CollisionManage
         else if(point2 instanceof Block)
             distanceBounds = Block.BLOCK_SIZE / 2.0;
 
-        if(Math.abs(p1.getX() - p2.getX()) <= distanceBounds || Math.abs(p1.getY() - p2.getY()) <= distanceBounds)
-            return 0;
+        if(Math.abs(p1.getX() - p2.getX()) <= distanceBounds && Math.abs(p1.getY() - p2.getY()) <= distanceBounds)
+            return -1;
         else
             return 1;
     }
