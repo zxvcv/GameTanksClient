@@ -57,8 +57,8 @@ public class TankSprite extends Tank implements Sprite, Drawable {
 
     @Override
     public void render() {
-        imageViev.setX(position.getX());
-        imageViev.setY(position.getY());
+        imageViev.setX(position.getX() - SpriteManager.TANK_OFFSET);
+        imageViev.setY(position.getY() - SpriteManager.TANK_OFFSET);
         imageViev.setRotate(rotation.getRotation());
 
 

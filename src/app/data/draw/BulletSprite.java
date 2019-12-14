@@ -55,8 +55,8 @@ public class BulletSprite extends Bullet implements Sprite, Drawable {
 
     @Override
     public void render() {
-        imageViev.setX(position.getX());
-        imageViev.setY(position.getY());
+        imageViev.setX(position.getX() - SpriteManager.BULLET_OFFSET);
+        imageViev.setY(position.getY() - SpriteManager.BULLET_OFFSET);
         imageViev.setRotate(rotation.getRotation());
 
         //old

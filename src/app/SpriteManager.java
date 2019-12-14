@@ -12,4 +12,8 @@ public class SpriteManager {
 
     public static final Image blockSpriteGrass = new Image("file:resources/grass.jpg");
     public static final Image blockSpriteStone = new Image("file:resources/stone.jpg");
+
+    public static final int BULLET_OFFSET = 25;
+    public static final int TANK_OFFSET = 25;
+    public static final int BLOCK_OFFSET = 25;
 }

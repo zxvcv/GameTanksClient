@@ -53,7 +53,7 @@ public class StoneBlockSprite extends StoneBlock implements Sprite, Drawable {
 
     @Override
     public void render() {
-        imageViev.setX(position.getX());
-        imageViev.setY(position.getY());
+        imageViev.setX(position.getX() - SpriteManager.BLOCK_OFFSET);
+        imageViev.setY(position.getY() - SpriteManager.BLOCK_OFFSET);
     }
 }
