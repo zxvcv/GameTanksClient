@@ -1,34 +1,37 @@
 package app.data.draw;
 
+import app.SpriteManager;
 import app.abstractObjects.Drawable;
 import app.abstractObjects.Sprite;
-import app.SpriteManager;
-import app.data.send.Bullet;
 import app.data.send.Position;
-import app.data.send.Rotation;
-import app.data.send.Tank;
+import app.data.send.StoneBlock;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class BulletSprite extends Bullet implements Sprite, Drawable {
+public class StoneBlockSprite extends StoneBlock implements Sprite, Drawable {
     private ImageView imageViev;
     private boolean isDisplay;
 
-    public BulletSprite(Bullet bullet){
-        super(bullet);
-        Image image = SpriteManager.bulletSprite;
+    public StoneBlockSprite(Position position, int index) {
+        super(position, index);
+        Image image = SpriteManager.blockSpriteStone;
         imageViev = new ImageView();
         imageViev.setImage(image);
         isDisplay = false;
     }
 
-    public BulletSprite(Position position, Rotation rotation, Tank owner, int index) {
-        super(position, rotation, owner, index);
-        Image image = SpriteManager.bulletSprite;
+    public StoneBlockSprite(StoneBlock block){
+        super(block.getPosition(), block.getIndex());
+        Image image = SpriteManager.blockSpriteStone;
         imageViev = new ImageView();
         imageViev.setImage(image);
         isDisplay = false;
+    }
+
+    @Override
+    public ImageView getImageViev() {
+        return imageViev;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class BulletSprite extends Bullet implements Sprite, Drawable {
     @Override
     public void undisplay(Group group) {
         group.getChildren().remove(imageViev);
-        isDisplay = false;
+        isDisplay = true;
     }
 
     @Override
@@ -49,17 +52,8 @@ public class BulletSprite extends Bullet implements Sprite, Drawable {
     }
 
     @Override
-    public ImageView getImageViev() {
-        return imageViev;
-    }
-
-    @Override
     public void render() {
         imageViev.setX(position.getX());
         imageViev.setY(position.getY());
-        imageViev.setRotate(rotation.getRotation());
-
-        //old
-        //gc.drawImage(image, getPosition().getX(), getPosition().getY());
     }
 }

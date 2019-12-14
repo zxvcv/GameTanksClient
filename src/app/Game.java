@@ -1,9 +1,9 @@
 package app;
 
+import app.abstractObjects.Block;
 import app.abstractObjects.Drawable;
 import app.abstractObjects.Indexable;
-import app.data.draw.BulletSprite;
-import app.data.draw.TankSprite;
+import app.data.draw.*;
 import app.data.send.*;
 import javafx.scene.Group;
 import sample.Main;
@@ -216,9 +216,26 @@ public class Game {
                 BulletSprite bs = new BulletSprite((Bullet)data);
                 bs.display(root);
                 gameManager.getBullets().add(bs);
-            } else if(data instanceof Map)
-                gameManager.setMap((Map)data);
-            else if(data instanceof GameMessage)
+            } else if(data instanceof Map) {
+                Block[][] blocksIN = ((Map) data).getBlocks();
+                int sizeX = blocksIN.length;
+                int sizeY = blocksIN[0].length;
+                Block[][] blocksOUT = new Block[sizeX][sizeY];
+
+                for(int x = 0; x < sizeX; ++x){
+                    for(int y = 0; y < sizeY; ++y){
+                        if(blocksIN[x][y] instanceof StoneBlock){
+                            blocksOUT[x][y] = new StoneBlockSprite((StoneBlock)blocksIN[x][y]);
+                        }else if(blocksIN[x][y] instanceof GrassBlock){
+                            blocksOUT[x][y] = new GrassBlockSprite((GrassBlock)blocksIN[x][y]);
+                        }
+                    }
+                }
+
+                MapSprite m = new MapSprite(blocksOUT, ((Map) data).getIndex());
+                m.display(root);
+                gameManager.setMap(m);
+            } else if(data instanceof GameMessage)
                 message = (GameMessage) data;
         }while(!message.getMessage().matches("DATA_END"));
 

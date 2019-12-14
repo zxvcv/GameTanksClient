@@ -1,10 +1,9 @@
 package app;
 
 import app.data.draw.BulletSprite;
+import app.data.draw.MapSprite;
 import app.data.draw.TankSprite;
 import app.data.send.*;
-import javafx.scene.Group;
-import javafx.scene.canvas.GraphicsContext;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -19,7 +18,6 @@ public class GameManager{
 
     public GameManager(){
         tanks = new ConcurrentLinkedQueue<>();
-        map = new Map(Game.getIndexer().getIndex());
         bullets = new ConcurrentLinkedQueue<>();
         players = new ConcurrentLinkedQueue<>();
         messageQueueReceived = new ConcurrentLinkedQueue<>();
@@ -56,9 +54,9 @@ public class GameManager{
 
     public void render(){
         for(Tank t : tanks)
-            ((TankSprite)t).render();
+            ((TankSprite) t).render();
         for(Bullet b : bullets)
-            ((BulletSprite)b).render();
+            ((BulletSprite) b).render();
     }
 
     public Player getPlayerWithIndex(int index){
