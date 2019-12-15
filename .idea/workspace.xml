@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="game v1.0.1&#10; -dzialajaca podstawa gry&#10; -zmiany w .gitignore">
-      <change afterPath="$PROJECT_DIR$/runClient.bat" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment=".bat runner v1.0.3&#10; -dodany skrypt do uruchamiania aplikacji z poziomu konsoli systemu">
+      <change afterPath="$PROJECT_DIR$/src/sample/images/bullet.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/images/grass.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/images/stone.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/images/tank_B.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/images/tank_G.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/images/tank_R.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/images/tank_Y.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/bullet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/grass.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/stone.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/tank_B.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/tank_G.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/tank_R.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/tank_Y.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runClient.bat" beforeDir="false" afterPath="$PROJECT_DIR$/runClient.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/SpriteManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/SpriteManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -290,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576370810408</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary=".bat runner v1.0.3&#10; -dodany skrypt do uruchamiania aplikacji z poziomu konsoli systemu">
+      <created>1576427001637</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1576427001637</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -324,6 +347,7 @@
     <MESSAGE value="collisions v0.3.3&#10; -wyjatek po wystrzeleniu paru pociskow" />
     <MESSAGE value="collisions v0.3.4&#10; -kolizje dzialaja bez problemow&#10; -usuwanie obiektow do zniszczenia&#10; -usuwanie obiektow wyswietlajacych do zniszczenia&#10; -odbieranie wiadomosci o zniszczeniu obiektu&#10; -usuniety blad zwieszania sie klienta" />
     <MESSAGE value="game v1.0.1&#10; -dzialajaca podstawa gry&#10; -zmiany w .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="game v1.0.1&#10; -dzialajaca podstawa gry&#10; -zmiany w .gitignore" />
+    <MESSAGE value=".bat runner v1.0.3&#10; -dodany skrypt do uruchamiania aplikacji z poziomu konsoli systemu" />
+    <option name="LAST_COMMIT_MESSAGE" value=".bat runner v1.0.3&#10; -dodany skrypt do uruchamiania aplikacji z poziomu konsoli systemu" />
   </component>
 </project>

@@ -3,15 +3,15 @@ package app;
 import javafx.scene.image.Image;
 
 public class SpriteManager {
-    public static final Image tankSpriteR = new Image("file:resources/tank_R.png");
-    public static final Image tankSpriteG = new Image("file:resources/tank_G.png");
-    public static final Image tankSpriteB = new Image("file:resources/tank_B.png");
-    public static final Image tankSpriteY = new Image("file:resources/tank_Y.png");
+    public static final Image tankSpriteR = new Image("file:src/sample/images/tank_R.png");
+    public static final Image tankSpriteG = new Image("file:src/sample/images/tank_G.png");
+    public static final Image tankSpriteB = new Image("file:src/sample/images/tank_B.png");
+    public static final Image tankSpriteY = new Image("file:src/sample/images/tank_Y.png");
 
-    public static final Image bulletSprite = new Image("file:resources/bullet.png");
+    public static final Image bulletSprite = new Image("file:src/sample/images/bullet.png");
 
-    public static final Image blockSpriteGrass = new Image("file:resources/grass.jpg");
-    public static final Image blockSpriteStone = new Image("file:resources/stone.jpg");
+    public static final Image blockSpriteGrass = new Image("file:src/sample/images/grass.jpg");
+    public static final Image blockSpriteStone = new Image("file:src/sample/images/stone.jpg");
 
     public static final int BULLET_OFFSET = 25;
     public static final int TANK_OFFSET = 25;

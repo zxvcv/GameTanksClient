@@ -18,8 +18,6 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Game {
-    static final int SERVER_SOCKET_NUM = 8100;
-
     private static GameManager gameManager;
     private ExecutorService executorService;
     private Socket socket;
@@ -182,18 +180,18 @@ public class Game {
         //laczenie z serverem
         socket  = new Socket();
         Scanner consoleIn = new Scanner(System.in);
-        String hostName;
+        String[] host;
         do{
-            System.out.print("set host name, or 0 to exit: ");
-            hostName = consoleIn.nextLine();
+            System.out.print("set host name and socket after \":\" i.e.:(192.168.0.1:8100), or 0 to exit: ");
+            host = consoleIn.nextLine().split(":");
             //hostName = "127.0.0.1";
-            if(hostName.matches("0")) {
+            if(host[0].matches("0")) {
                 System.out.println("[I] server shutdown");
                 return;
             }
 
             try {
-                socket.connect(new InetSocketAddress(hostName, SERVER_SOCKET_NUM), 5000);
+                socket.connect(new InetSocketAddress(host[0], Integer.parseInt(host[1])), 5000);
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("[I] unable to connect to the server");
