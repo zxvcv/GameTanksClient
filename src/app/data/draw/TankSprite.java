@@ -1,5 +1,6 @@
 package app.data.draw;
 
+import app.Game;
 import app.abstractObjects.Drawable;
 import app.abstractObjects.Sprite;
 import app.SpriteManager;
@@ -40,9 +41,15 @@ public class TankSprite extends Tank implements Sprite, Drawable {
     }
 
     @Override
+    public synchronized void destroy() {
+        Game.getGameManager().getTanks().remove(this);
+    }
+
+    @Override
     public void undisplay(Group group) {
         group.getChildren().remove(imageViev);
         isDisplay = false;
+        this.destroy();
     }
 
     @Override

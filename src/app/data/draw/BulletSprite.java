@@ -1,5 +1,6 @@
 package app.data.draw;
 
+import app.Game;
 import app.abstractObjects.Drawable;
 import app.abstractObjects.Sprite;
 import app.SpriteManager;
@@ -38,9 +39,15 @@ public class BulletSprite extends Bullet implements Sprite, Drawable {
     }
 
     @Override
+    public void destroy() {
+        Game.getGameManager().getBullets().remove(this);
+    }
+
+    @Override
     public void undisplay(Group group) {
         group.getChildren().remove(imageViev);
         isDisplay = false;
+        this.destroy();
     }
 
     @Override

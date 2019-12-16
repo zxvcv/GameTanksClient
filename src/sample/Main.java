@@ -110,11 +110,9 @@ public class Main extends Application {
                 while(!Game.getObjectsToDisplay().isEmpty())
                     Game.getObjectsToDisplay().poll().display(root);
 
-                while(!Game.getObjectsToUndisplay().isEmpty()){
-                    Drawable d = Game.getObjectsToUndisplay().poll();
-                    if(d != null)
-                        d.undisplay(root);
-                }
+                while(!Game.getObjectsToUndisplay().isEmpty())
+                    Game.getObjectsToUndisplay().poll().undisplay(root);
+
                 gameManager.render();
             }
         }.start();

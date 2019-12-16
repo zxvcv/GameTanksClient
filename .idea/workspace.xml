@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment=".bat runner v1.0.3&#10; -dodany skrypt do uruchamiania aplikacji z poziomu konsoli systemu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runClient.bat" beforeDir="false" afterPath="$PROJECT_DIR$/runClient.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/draw/BulletSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/draw/BulletSprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/draw/TankSprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/draw/TankSprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/data/send/Tank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/data/send/Tank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

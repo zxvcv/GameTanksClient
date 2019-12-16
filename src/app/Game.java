@@ -102,7 +102,6 @@ public class Game {
                 try {
                     data = inputStream.readObject();
                     message = (GameMessage) data;
-
                     gameManager.getMessageQueueReceived().add(message);
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace(); return;
@@ -124,6 +123,9 @@ public class Game {
         public void run() {
             GameMessage message;
             GameMessageData messageData;
+
+            //uruchomienie wątku obslugi czasu
+            //executorService.execute(new TimeManager(timeLock));
 
             while(true){
                 while(!gameManager.getMessageQueueReceived().isEmpty()){
@@ -157,12 +159,12 @@ public class Game {
                             if(message.getMessage().endsWith("BULLET")){
                                 BulletSprite bs = (BulletSprite)gameManager.getBulletWithIndex(message.getPlayerIndex());
                                 objectsToUndisplay.add(bs);
-                                gameManager.getBullets().remove(bs);
+                                //gameManager.getBullets().remove(bs);
                             }
                             if(message.getMessage().endsWith("TANK")){
                                 TankSprite ts = (TankSprite)gameManager.getTankWithIndex(message.getPlayerIndex());
                                 objectsToUndisplay.add(ts);
-                                gameManager.getTanks().remove(ts);
+                                //gameManager.getTanks().remove(ts);
                             }
                         }
                     }else{
@@ -175,7 +177,7 @@ public class Game {
     }
 
     public void connectToTheServer() throws IOException, ClassNotFoundException {
-        executorService = Executors.newFixedThreadPool(3);
+        executorService = Executors.newFixedThreadPool(4);
 
         //laczenie z serverem
         socket  = new Socket();
@@ -248,21 +250,6 @@ public class Game {
             } else if(data instanceof GameMessage)
                 message = (GameMessage) data;
         }while(!message.getMessage().matches("DATA_END"));
-
-        //###################################tests
-        System.out.print("PLAYERS: ");
-        for(Player p : gameManager.getPlayers())
-            System.out.print(p.getIndex());
-        System.out.println();
-        System.out.print("TANKS: ");
-        for(Tank t : gameManager.getTanks())
-            System.out.print(t.getIndex());
-        System.out.println();
-        System.out.print("BULLETS: ");
-        for(Bullet b : gameManager.getBullets())
-            System.out.print(b.getIndex());
-        System.out.println();
-        //###################################ENDtests
 
         //potwierdzenie otrzymania danych poczatkowych i gotowosci do gry
         message.setMessage("READY");
