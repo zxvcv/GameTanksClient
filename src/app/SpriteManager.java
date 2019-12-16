@@ -16,4 +16,19 @@ public class SpriteManager {
     public static final int BULLET_OFFSET = 25;
     public static final int TANK_OFFSET = 25;
     public static final int BLOCK_OFFSET = 25;
+
+    public static Image getTankSpriteColor(String color){
+        switch (color){
+            case "R":
+                return tankSpriteR;
+            case "G":
+                return tankSpriteG;
+            case "B":
+                return tankSpriteB;
+            case "Y":
+                return tankSpriteY;
+            default:
+                return null;
+        }
+    }
 }

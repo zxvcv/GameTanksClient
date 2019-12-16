@@ -20,15 +20,15 @@ public class TankSprite extends Tank implements Sprite, Drawable {
 
     public TankSprite(Tank tank) {
         super(tank);
-        Image image = SpriteManager.tankSpriteY;
+        Image image = SpriteManager.getTankSpriteColor(tank.getColor());
         imageViev = new ImageView();
         imageViev.setImage(image);
         isDisplay = false;
     }
 
-    public TankSprite(Position position, Rotation rotation, Player player, int index) {
-        super(position, rotation, player, index);
-        Image image = SpriteManager.tankSpriteY;
+    public TankSprite(Position position, Rotation rotation, Player player, String color, int index) {
+        super(position, rotation, player, color, index);
+        Image image = SpriteManager.getTankSpriteColor(color);
         imageViev = new ImageView();
         imageViev.setImage(image);
         isDisplay = false;
